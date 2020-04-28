@@ -1,5 +1,5 @@
 // sa jsx govorimo kao da je iskljucivo o react komponenti
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 //ovo ima 48 linije koda a clasa ima 58, ova je takoder i laksa za citat jer nema this. ovo ono itd...
 
@@ -15,8 +15,13 @@ export function Stopwatch() {
 
     timerInterval.current = setInterval(() => {
       setTimer((timer) => timer + 1); //ova dva timer(a) nisu isti
-    }, 10);
+    }, 1);
   };
+
+  let centiseconds = ("0" + (Math.floor(timer / 10) % 100)).slice(-2);
+  let seconds = ("0" + (Math.floor(timer / 1000) % 60)).slice(-2);
+  let minutes = ("0" + (Math.floor(timer / 60000) % 60)).slice(-2);
+  let hours = ("0" + Math.floor(timer / 3600000)).slice(-2);
 
   const onStop = () => {
     if (timerInterval.current) {
@@ -31,18 +36,30 @@ export function Stopwatch() {
 
   const onLap = () => {
     setTimes([...times, timer]);
+
     setTimer(0);
+  };
+  useEffect(() => {
+    document.title = `${new Date(onLap)} `;
+  });
+
+  //Clear dio gotov
+  const onClear = () => {
+    setTimes([]);
   };
 
   return (
     <div>
-      <div>{timer}</div>
+      <div>
+        {hours} {minutes} {seconds} {centiseconds}{" "}
+      </div>
 
       <div>
         <button onClick={onStart}>START</button>
         <button onClick={onStop}>STOP</button>
         <button onClick={onLap}>LAP</button>
         <button onClick={onReset}>RESET</button>
+        <button onClick={onClear}>CLEAR</button>
       </div>
 
       <div>
