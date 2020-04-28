@@ -1,0 +1,38 @@
+Potrebno je napraviti React aplikaciju koja će funkcionirati poput štoperice.
+
+Štoperica se sastoji od prikaza trenutno štopanog vremena, dugmadi za interakciju sa štopericom, te popisa prethodno štopanih vremena.
+
+Dugmad na štoperici ima mogućnosti START, STOP, LAP, i RESET.
+
+START dugme započinje štopanje. Vrijeme se štopa u desetinku sekunde i osvježava prikaz trenutno štopanog vremena. START dugme radi samo ako se vrijeme trenutno ne štopa.
+
+STOP dugme zaustavlja štopanje. Nakon pritiska dugmeta trenutno štopano vrijeme prikazuje vrijeme u trenutku kada je štopanje zaustavljeno. STOP dugme radi samo ako se vrijeme trenutno štopa. Ako je štopanje zaustavljeno, START dugme nastavlja sa štopanjem u trenutku zaustavljanja.
+
+LAP dugme bilježi trenutno vrijeme štopanja u popis štopanih vremena i odmah započinje štopanje iznova (od 0). LAP dugme radi samo ako se vrijeme trenutno štopa.
+
+RESET postavlja trenutno štopano vrijeme u 0, bez obzira na to štopa li se vrijeme u tom trenutku. RESET dugme radi uvijek.
+
+Štoperica treba biti realizirana u obliku stateful class komponente imena Stopwatch.
+
+Stopwatch komponentu treba uključiti u glavnu App komponentu koja predstavlja aplikaciju.
+
+Upute u koracima:
+
+1. Napraviti novu React aplikaciju putem create-react-app
+2. Definirati JSX strukturu štoperice - položaj timera, dugmadi, i popisa vremena.
+3. Definirati state sa timerom i popisom
+4. Prikazati timer i popis putem JSX-a
+5. Definirati event handler za START dugme
+6. Definirati event handler za STOP dugme
+7. Definirati event handler za RESET dugme
+8. Definirati event handler za LAP dugme
+9. Pretvoriti stateful class komponentu u function komponentu koja koristi hookove
+10. Objaviti kod u javnom GitHub repozitoriju
+
+Bonus zadaci:
+
+1. Razdvojiti Stopwatch komponentu na stateful i stateless dijelove: stateful dio staviti u App komponentu, a stateless dio u Stopwatch komponentu
+2. Dodati dugme CLEAR za brisanje popisa štopanih vremena
+3. Popis štopanih vremena prikazati na način da su vremena poredana od novijih prema starijima
+4. Prikazati vremena u formatu '00:00:00.00', odnosno 'sati:minute:sekunde.desetinke'
+5. Realizirati START / STOP funkcionalnost kroz jedan button koristeći conditional rendering
