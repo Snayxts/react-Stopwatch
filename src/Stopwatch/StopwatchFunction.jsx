@@ -1,72 +1,96 @@
-// sa jsx govorimo kao da je iskljucivo o react komponenti
-import React, { useState, useRef, useEffect } from "react";
-
-//ovo ima 48 linije koda a clasa ima 58, ova je takoder i laksa za citat jer nema this. ovo ono itd...
+import React, { useState, useRef } from "react";
+import "./App.css";
+import DisplayingTimes from "./Stopwatch";
 
 export function Stopwatch() {
-  const [timer, setTimer] = useState(0);
-  const [times, setTimes] = useState([]);
+  const [time, setTime] = useState(0);
+  const [lap, setLap] = useState([]);
+  const [lapboolean, setLapboolean] = useState(false);
   const timerInterval = useRef();
 
-  const onStart = () => {
+  const startTimer = () => {
     if (timerInterval.current) return;
 
-    //ovo current znaci trenutacno stanje ovog useRef() ; ako je useRef() prazan onda je undefined, ako ima nesto definiran je, on je objekt
-
     timerInterval.current = setInterval(() => {
-      setTimer((timer) => timer + 1); //ova dva timer(a) nisu isti
+      setTime((time) => time + 1);
     }, 1);
+
+    setLapboolean(true);
   };
 
-  let centiseconds = ("0" + (Math.floor(timer / 10) % 100)).slice(-2);
-  let seconds = ("0" + (Math.floor(timer / 1000) % 60)).slice(-2);
-  let minutes = ("0" + (Math.floor(timer / 60000) % 60)).slice(-2);
-  let hours = ("0" + Math.floor(timer / 3600000)).slice(-2);
-
-  const onStop = () => {
+  const stopTimer = () => {
     if (timerInterval.current) {
       clearInterval(timerInterval.current);
       timerInterval.current = null;
     }
+
+    setLapboolean(false);
   };
 
-  const onReset = () => {
-    setTimer(0);
+  const resetTimer = () => {
+    setTime(0);
   };
 
-  const onLap = () => {
-    setTimes([...times, timer]);
+  const lapTime = () => {
+    if (!time) return;
 
-    setTimer(0);
+    setLap([...lap, time]);
+    setTime(0);
   };
-  useEffect(() => {
-    document.title = `${new Date(onLap)} `;
-  });
 
-  //Clear dio gotov
-  const onClear = () => {
-    setTimes([]);
+  const clearLapTime = () => {
+    if (lap.length > 1) {
+      setLap([...lap.slice(-1, 0)]);
+    } else if (lap.length === 1) {
+      setLap([...lap.slice(-1, 0)]);
+    }
   };
 
   return (
-    <div>
+    <div className="App">
+      <p>STOPWATCH</p>
+
+      {/* Displating buttons */}
       <div>
-        {hours} {minutes} {seconds} {centiseconds}{" "}
+        {lapboolean ? (
+          <button onClick={stopTimer} className="buttons">
+            Stop
+          </button>
+        ) : (
+          <button onClick={startTimer} className="buttons">
+            Start
+          </button>
+        )}
+
+        <button onClick={resetTimer} className="buttons">
+          Reset
+        </button>
+
+        <button onClick={lapTime} className="buttons">
+          Lap
+        </button>
+
+        <button onClick={clearLapTime} className="buttons">
+          Clear Laps
+        </button>
       </div>
 
-      <div>
-        <button onClick={onStart}>START</button>
-        <button onClick={onStop}>STOP</button>
-        <button onClick={onLap}>LAP</button>
-        <button onClick={onReset}>RESET</button>
-        <button onClick={onClear}>CLEAR</button>
-      </div>
+      {/*Displaying stopwatch timer  */}
+      <div>{DisplayingTimes.displayAll(time)}</div>
 
+      {/*Displaying laps  */}
       <div>
-        {times.map((time, index) => (
-          <div key={index}>{time}></div>
-        ))}
+        <div>LAPS</div>
+        {lap
+          .map((i, index) => (
+            <div key={index} className="Laps">
+              <p className="time">{DisplayingTimes.displayAll(i)}</p>
+            </div>
+          ))
+          .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
+          .reverse()}
       </div>
+      {/* <App2 /> */}
     </div>
   );
 }

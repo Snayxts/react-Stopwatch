@@ -1,0 +1,32 @@
+.App {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 18px;
+}
+
+.time {
+  color: #ffffff;
+  box-shadow: 0 0 8px 1px rgb(100, 96, 96);
+  border: none;
+}
+.Laps {
+  padding: 15px;
+  font-size: 20px;
+  min-width: 400px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(78, 70, 70);
+}
+
+.buttons {
+  background-color: rgba(61, 61, 63, 0.582);
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  box-shadow: 0 0 2px 1px rgb(63, 180, 88);
+  margin: 0 10px 0 10px;
+  cursor: pointer;
+}
