@@ -39,9 +39,7 @@ export function Stopwatch() {
   };
 
   const clearLapTime = () => {
-    if (lap.length > 1) {
-      setLap([...lap.slice(-1, 0)]);
-    } else if (lap.length === 1) {
+    if (lap.length > 1 || lap.length === 1) {
       setLap([...lap.slice(-1, 0)]);
     }
   };
@@ -90,7 +88,6 @@ export function Stopwatch() {
           .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())
           .reverse()}
       </div>
-      {/* <App2 /> */}
     </div>
   );
 }
